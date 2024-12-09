@@ -1,0 +1,35 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Country {
+  code      String?
+  companies Company[]
+  createdAt DateTime  @default(now())
+  currency  String?
+  id        String    @id @default(cuid())
+  name      String?
+  updatedAt DateTime  @updatedAt
+}
+
+model Company {
+  country    Country? @relation(fields: [countryId], references: [id])
+  countryId  String?
+  createdAt  DateTime @default(now())
+  email      String?
+  fax        String?
+  founded    String?
+  founder    String?
+  id         String   @id @default(cuid())
+  name       String?
+  nationalId String?
+  phone      String?
+  rc         String?
+  updatedAt  DateTime @updatedAt
+  url        String?
+}
